@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Chronometer sw;
     private TextView txtLap;
+    private TextView txtLapTimes;
 
     private Timer lockoutTimer;
 
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     },500);
                     txtLap.setText(String.valueOf(++lapCounter));
+                    txtLapTimes.setText(
+                            txtLapTimes.getText() +
+                            "\n"+ String.valueOf(lapCounter)+ " This Lap " + sw.getText());
                     break;
                 case R.id.btnReset:
                     txtLap.setText(String.valueOf(lapCounter=0));
@@ -78,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
                 sw.setBase(elapsedRealtime()-swElapsedTime);
                 sw.start();
                 btnReset.setEnabled(false);
+                btnLap.setEnabled(true);
             } else {
                 swElapsedTime= elapsedRealtime()-sw.getBase();
                 sw.stop();
                 btnReset.setEnabled(true);
+                btnLap.setEnabled(false);
             }
         }
     };
@@ -98,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         //Find the text areas in the content view
         sw = (Chronometer) findViewById(R.id.sw);
         txtLap = (TextView) findViewById(R.id.txtLap);
+        txtLapTimes = (TextView) findViewById(R.id.txtLapTimes);
 
         //Make Timer
         lockoutTimer = new Timer();
