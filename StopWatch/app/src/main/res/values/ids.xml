@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btnReset" type="id" />
+    <item name="btnLap" type="id" />
+    <item name="tbtnStartStop" type="id" />
+    <item name="sw" type="id" />
+    <item name="swLap" type="id" />
+    <item name="txtLap" type="id" />
+    <item name="linLayLapCounter" type="id" />
+</resources>
