@@ -25,27 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnLap;
     private Button btnReset;
-    private ToggleButton tbtnStartStop;
     private LinearLayout ll;
 
     private Chronometer sw;
     private Chronometer swLap;
     private TextView txtLap;
-    private TextView currentLap;
 
     private Timer lockoutTimer;
-
-    private TimerTask enableLapButton = new TimerTask() {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    btnLap.setEnabled(true);
-                }
-            });
-        }
-    };
 
     private View.OnClickListener mbtnClickListener = new View.OnClickListener() {
         public void onClick(View v){
@@ -56,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     swLap.stop();
 
                     TextView currentLap = new TextView(getApplicationContext());
-                    currentLap.setText(String.valueOf(lapCounter) + "     " + swLap.getText() + "     " + sw.getText());
+                    currentLap.setText(String.format(getString(R.string.lapFormat), lapCounter, swLap.getText(), sw.getText()));
 
                     swLap.setBase(currentTime);
                     swLapElapsedTime = 0;
@@ -99,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             if (isChecked) {
                 sw.setBase(currentTime - swElapsedTime);
                 sw.start();
-                swLap.setBase(currentTime - swElapsedTime);
+                swLap.setBase(currentTime - swLapElapsedTime);
                 swLap.start();
                 btnReset.setEnabled(false);
                 btnLap.setEnabled(true);
@@ -124,16 +110,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Find my buttons in the content view
-        btnLap = (Button) findViewById(R.id.btnLap);
-        btnReset = (Button) findViewById(R.id.btnReset);
-        tbtnStartStop = (ToggleButton) findViewById(R.id.tbtnStartStop);
+        btnLap = findViewById(R.id.btnLap);
+        btnReset = findViewById(R.id.btnReset);
+        ToggleButton tbtnStartStop = findViewById(R.id.tbtnStartStop);
 
         //Find the text areas in the content view
-        sw = (Chronometer) findViewById(R.id.sw);
-        swLap = (Chronometer) findViewById(R.id.swLap);
-        txtLap = (TextView) findViewById(R.id.txtLap);
+        sw = findViewById(R.id.sw);
+        swLap = findViewById(R.id.swLap);
+        txtLap = findViewById(R.id.txtLap);
         //ScrollView scrViewLapCounter = (ScrollView) findViewById(R.id.scrViewLapCounter);
-        ll = (LinearLayout) findViewById(R.id.linLayLapCounter);
+        ll = findViewById(R.id.linLayLapCounter);
 
 
         //Make Timer
@@ -145,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         tbtnStartStop.setOnCheckedChangeListener(mtglChangeListener);
         tbtnStartStop.setOnClickListener(mbtnClickListener);
 
-        // Initialize the lapcounter and display
+        // Initialize the lapCounter and display
         lapCounter = 0;
         txtLap.setText(String.valueOf(lapCounter));
 
